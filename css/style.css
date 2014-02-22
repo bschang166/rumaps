@@ -1,0 +1,10 @@
+/* line 1, ../sass/style.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 5, ../sass/style.scss */
+#map-canvas {
+  height: 100%;
+  width: 100%;
+}
