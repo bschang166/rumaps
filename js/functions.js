@@ -7,7 +7,7 @@ function initialize() {
     //Many of these settings are questionable at best
     mapOptions = {
         center: new google.maps.LatLng(40.52349, -74.43723),
-        zoom: 18,
+        zoom: 17,
         minZoom: 17,
         panControl: false
         // draggable: false
@@ -32,17 +32,12 @@ function initialize() {
             ]
         }
     ]);
-    var imageMapType = new google.maps.ImageMapType({
-        getTileUrl: function(coord, zoom) {
-            console.log(coord+" "+zoom);
-            if(coord.x === 76868 && coord.y === 98742 && zoom === 18){
-                return "images/Livingston Campus Center.png"
-            }
-        },
-        tileSize: new google.maps.Size(256, 256)
+
+
+    google.maps.event.addListener(map, 'center_changed', function() {
+        document.title = map.getCenter();
     });
 
-    map.overlayMapTypes.push(imageMapType);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
