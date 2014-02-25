@@ -33,9 +33,19 @@ function initialize() {
         }
     ]);
 
+    var imageMapType = new google.maps.ImageMapType({
+        getTileUrl: function(coord, zoom) {
+            if(coord.x === 76868 && coord.y === 98742 && zoom === 18){
+                return "images/Livingston Campus Center.png"
+            }
+        },
+        tileSize: new google.maps.Size(256, 256)
+    });
+
+    map.overlayMapTypes.push(imageMapType);
 
     google.maps.event.addListener(map, 'center_changed', function() {
-        document.title = map.getCenter();
+        console.log(map.getCenter());
     });
 
 }
