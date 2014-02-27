@@ -2,7 +2,7 @@ function CoordMapType(tileSize) {
     this.tileSize = tileSize;
 }
 
-CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
     var div = ownerDocument.createElement('div');
     div.innerHTML = coord;
     div.style.width = this.tileSize.width + 'px';
@@ -24,9 +24,9 @@ function initialize() {
     //Many of these settings are questionable at best
     mapOptions = {
         center: new google.maps.LatLng(40.52349, -74.43723),
-        zoom: 17,
-        minZoom: 17,
-        panControl: false
+        zoom: 17
+        // minZoom: 17,
+        // panControl: false,
         // draggable: false
     };
 
@@ -50,19 +50,19 @@ function initialize() {
         }
     ]);
 
-    var imageMapType = new google.maps.ImageMapType({
-        getTileUrl: function(coord, zoom) {
-            if(coord.x === 76868 && coord.y === 98742 && zoom === 18){
-                return "images/Livingston Campus Center.png"
-            }
-        },
-        tileSize: new google.maps.Size(256, 256)
-    });
+//    var imageMapType = new google.maps.ImageMapType({
+//        getTileUrl: function (coord, zoom) {
+//            if (coord.x === 76868 && coord.y === 98742 && zoom === 18) {
+//                return "images/Livingston Campus Center.png"
+//            }
+//        },
+//        tileSize: new google.maps.Size(256, 256)
+//    });
+//    map.overlayMapTypes.push(imageMapType);
 
-    map.overlayMapTypes.push(imageMapType);
     map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 
-    google.maps.event.addListener(map, 'center_changed', function() {
+    google.maps.event.addListener(map, 'center_changed', function () {
         //console.log(map.getCenter());
     });
 }
