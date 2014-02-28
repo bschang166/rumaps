@@ -50,21 +50,19 @@ function initialize() {
         }
     ]);
 
-//    var imageMapType = new google.maps.ImageMapType({
-//        getTileUrl: function (coord, zoom) {
-//            if (coord.x === 76868 && coord.y === 98742 && zoom === 18) {
-//                return "images/Livingston Campus Center.png"
-//            }
-//        },
-//        tileSize: new google.maps.Size(256, 256)
-//    });
-//    map.overlayMapTypes.push(imageMapType);
-
-    map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
-
-    google.maps.event.addListener(map, 'center_changed', function () {
-        //console.log(map.getCenter());
+    var imageMapType = new google.maps.ImageMapType({
+        getTileUrl: function (coord, zoom) {
+            console.log(coord);
+        },
+        tileSize: new google.maps.Size(256, 256)
     });
+    map.overlayMapTypes.push(imageMapType);
+
+//    map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
+
+//    google.maps.event.addListener(map, 'center_changed', function () {
+//        console.log(map.getCenter());
+//    });
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
