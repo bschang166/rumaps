@@ -14,6 +14,17 @@ CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
     return div;
 };
 
+var rutgersMapType = new google.maps.ImageMapType({
+    getTileUrl: function (coord, zoom) {
+        if (zoom === 17) {
+            if (coord.x >= 38432 && coord.x <= 38436 && coord.y >= 49370 && coord.y <= 49373) {
+                return 'images/Livingston-Map-' + coord.x + '-' + coord.y + ".gif";
+            }
+        }
+    },
+    tileSize: new google.maps.Size(256, 256)
+});
+
 
 function initialize() {
     var map;
@@ -50,19 +61,8 @@ function initialize() {
         }
     ]);
 
-    var imageMapType = new google.maps.ImageMapType({
-        getTileUrl: function (coord, zoom) {
-            console.log(coord);
-        },
-        tileSize: new google.maps.Size(256, 256)
-    });
-    map.overlayMapTypes.push(imageMapType);
-
-//    map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
-
-//    google.maps.event.addListener(map, 'center_changed', function () {
-//        console.log(map.getCenter());
-//    });
+    map.overlayMapTypes.push(rutgersMapType);
+    map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
