@@ -43,6 +43,7 @@ function initialize() {
 
     map.setOptions(mapOptions);
 
+	/*
     map.set('styles', [
         {
             "featureType": "landscape.man_made",
@@ -60,7 +61,8 @@ function initialize() {
             ]
         }
     ]);
-
+	*/
+	
     map.overlayMapTypes.push(rutgersMapType);
     map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 }
