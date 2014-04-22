@@ -1,7 +1,7 @@
 function CoordMapType(tileSize) {
     this.tileSize = tileSize;
 }
-//PENIS
+
 CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
     var div = ownerDocument.createElement('div');
     div.innerHTML = coord;
@@ -62,7 +62,6 @@ function initialize() {
         }
     ]);
 	*/
-	$().addClass()
     map.overlayMapTypes.push(rutgersMapType);
     map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 }
