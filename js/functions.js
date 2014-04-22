@@ -2,6 +2,13 @@ function CoordMapType(tileSize) {
     this.tileSize = tileSize;
 }
 
+/**
+ * Coordinate maptype, displays coordinates and borders on the map
+ * @param coord
+ * @param zoom
+ * @param ownerDocument
+ * @returns {HTMLElement}
+ */
 CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
     var div = ownerDocument.createElement('div');
     div.innerHTML = coord;
@@ -14,6 +21,10 @@ CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
     return div;
 };
 
+/**
+ * Rutgers maptype, returns images within specific coordinates (Livingston Campus)
+ * @type {google.maps.ImageMapType}
+ */
 var rutgersMapType = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
         if (zoom === 17) {
@@ -35,7 +46,10 @@ function initialize() {
     //Many of these settings are questionable at best
     mapOptions = {
         center: new google.maps.LatLng(40.52349, -74.43723),
-        zoom: 17
+        zoom: 17,
+        mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP]
+        }
         // minZoom: 17,
         // panControl: false,
         // draggable: false
@@ -43,7 +57,7 @@ function initialize() {
 
     map.setOptions(mapOptions);
 
-	/*
+    /*
     map.set('styles', [
         {
             "featureType": "landscape.man_made",
@@ -61,8 +75,8 @@ function initialize() {
             ]
         }
     ]);
-	*/
-    map.overlayMapTypes.push(rutgersMapType);
+    */
+    //map.overlayMapTypes.push(rutgersMapType);
     map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 }
 
