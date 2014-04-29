@@ -22,10 +22,10 @@ CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
 };
 
 /**
- * Rutgers maptype, returns images within specific coordinates (Livingston Campus)
+ * Livingston maptype, returns images within specific coordinates (Livingston Campus)
  * @type {google.maps.ImageMapType}
  */
-var rutgersMapType = new google.maps.ImageMapType({
+var livingstonMapType = new google.maps.ImageMapType({
     getTileUrl: function (coord, zoom) {
         if (zoom === 17) {
             if (coord.x >= 38432 && coord.x <= 38436 && coord.y >= 49370 && coord.y <= 49373) {
@@ -36,12 +36,34 @@ var rutgersMapType = new google.maps.ImageMapType({
     tileSize: new google.maps.Size(256, 256)
 });
 
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+
+/**
+ * Gets the values for id's "start" and "end" and displays the directions if possible
+ */
+function calcRoute() {
+    var start = document.getElementById('start').value;
+    var end = document.getElementById('end').value;
+    var request = {
+        origin:start,
+        destination:end,
+        travelMode: google.maps.TravelMode.DRIVING
+    };
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        }
+    });
+}
 
 function initialize() {
     var map;
     var mapOptions;
 
     map = new google.maps.Map(document.getElementById("map-canvas"));
+
+    directionsDisplay = new google.maps.DirectionsRenderer();
 
     //Many of these settings are questionable at best
     mapOptions = {
@@ -54,30 +76,15 @@ function initialize() {
         // panControl: false,
         // draggable: false
     };
-
+    var control = document.getElementById('control');
     map.setOptions(mapOptions);
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(control)
 
-    /*
-    map.set('styles', [
-        {
-            "featureType": "landscape.man_made",
-            "elementType": "geometry.fill",
-            "stylers": [
-                {
-                    "hue": "#FF7A7A"
-                },
-                {
-                    "saturation": 58
-                },
-                {
-                    "lightness": -46
-                }
-            ]
-        }
-    ]);
-    */
-    //map.overlayMapTypes.push(rutgersMapType);
-    map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById('directions-panel'));
+
+    map.overlayMapTypes.push(livingstonMapType);
+   // map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

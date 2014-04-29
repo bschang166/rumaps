@@ -34,7 +34,17 @@
     </nav>
 </header>
 
+<div id="control">
+   <b>From:</b>
+   <input id="start" type="text" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
+   <b>To:</b>
+   <input id="end" type="text" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
+   <button id="getDir" onclick="calcRoute()">Go!</button>
+</div>
+
 <div id="map-canvas"></div>
+
+<div id="directions-panel"></div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap/affix.js"></script>
