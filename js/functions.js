@@ -36,13 +36,24 @@ var livingstonMapType = new google.maps.ImageMapType({
     tileSize: new google.maps.Size(256, 256)
 });
 
+var map;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
+var stepDisplay;
+var markerArray = [];
 
 /**
  * Gets the values for id's "start" and "end" and displays the directions if possible
  */
 function calcRoute() {
+    // First, remove any existing markers from the map.
+    for (var i = 0; i < markerArray.length; i++) {
+        markerArray[i].setMap(null);
+    }
+
+    // Now, clear the array itself.
+    markerArray = [];
+
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
     var request = {
@@ -52,18 +63,50 @@ function calcRoute() {
     };
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
+            var warnings = document.getElementById('warnings_panel');
+            warnings.innerHTML = '<b>' + response.routes[0].warnings + '</b>';
             directionsDisplay.setDirections(response);
+            showSteps(response);
         }
     });
 }
 
+function showSteps(directionResult) {
+    // For each step, place a marker, and add the text to the marker's
+    // info window. Also attach the marker to an array so we
+    // can keep track of it and remove it when calculating new
+    // routes.
+    var myRoute = directionResult.routes[0].legs[0];
+
+    for (var i = 0; i < myRoute.steps.length; i++) {
+        var marker = new google.maps.Marker({
+            position: myRoute.steps[i].start_location,
+            map: map
+        });
+        attachInstructionText(marker, myRoute.steps[i].instructions);
+        markerArray[i] = marker;
+    }
+}
+
+function attachInstructionText(marker, text) {
+    google.maps.event.addListener(marker, 'click', function() {
+        // Open an info window when the marker is clicked on,
+        // containing the text of the step.
+        stepDisplay.setContent(text);
+        stepDisplay.open(map, marker);
+    });
+}
+
 function initialize() {
-    var map;
     var mapOptions;
+
 
     map = new google.maps.Map(document.getElementById("map-canvas"));
 
-    directionsDisplay = new google.maps.DirectionsRenderer();
+    var rendererOptions = {
+        map: map
+    }
+    directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 
     //Many of these settings are questionable at best
     mapOptions = {
@@ -80,10 +123,12 @@ function initialize() {
     map.setOptions(mapOptions);
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(control)
 
+    stepDisplay = new google.maps.infoWindow();
+
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
-    map.overlayMapTypes.push(livingstonMapType);
+   //map.overlayMapTypes.push(livingstonMapType);
    // map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 }
 
