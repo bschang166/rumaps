@@ -25,9 +25,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Livingston</a></li>
-                    <li class=""><a href="#">Busch</a></li>
-                    <li class=""><a href="#">College Ave</a></li>
+                    <li><a id="livingston" href="#">Livingston</a></li>
+                    <li><a id="busch" href="#">Busch</a></li>
+                    <li><a href="college-ave">College Ave</a></li>
                 </ul>
             </div>
         </div>
@@ -35,11 +35,11 @@
 </header>
 
 <div id="control">
-   <b>From:</b>
-   <input id="start" type="text" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
-   <b>To:</b>
-   <input id="end" type="text" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
-   <button id="getDir" onclick="calcRoute()">Go!</button>
+    <b>From:</b>
+    <input id="start" type="text" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
+    <b>To:</b>
+    <input id="end" type="text" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
+    <button id="getDir" onclick="calcRoute()">Go!</button>
 </div>
 
 <div id="map-canvas"></div>

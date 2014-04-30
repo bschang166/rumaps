@@ -46,11 +46,11 @@ function calcRoute() {
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
     var request = {
-        origin:start,
-        destination:end,
+        origin: start,
+        destination: end,
         travelMode: google.maps.TravelMode.DRIVING
     };
-    directionsService.route(request, function(response, status) {
+    directionsService.route(request, function (response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
         }
@@ -63,9 +63,6 @@ function initialize() {
 
     map = new google.maps.Map(document.getElementById("map-canvas"));
 
-    directionsDisplay = new google.maps.DirectionsRenderer();
-
-    //Many of these settings are questionable at best
     mapOptions = {
         center: new google.maps.LatLng(40.52349, -74.43723),
         zoom: 17,
@@ -76,15 +73,42 @@ function initialize() {
         // panControl: false,
         // draggable: false
     };
-    var control = document.getElementById('control');
     map.setOptions(mapOptions);
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(control)
 
+    //Search form for directions
+    var directionControl = document.getElementById('control');
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(directionControl)
+
+    directionsDisplay = new google.maps.DirectionsRenderer()
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
+    //Overlay types
     map.overlayMapTypes.push(livingstonMapType);
-   // map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
+    // map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
+
+    var buschMarker = new google.maps.Marker(
+        {
+            position: new google.maps.LatLng(40.523325, -74.458694),
+            map: map,
+            title: 'my 2nd title'
+        }
+    );
+    google.maps.event.addDomListener(document.getElementById("busch"), "click", function (ev) {
+        map.setCenter(buschMarker.getPosition());
+    });
+
+    var livingstonMarker = new google.maps.Marker(
+        {
+            position: new google.maps.LatLng(40.523484, -74.437129),
+            map: map,
+            title: 'my 2nd title'
+        }
+    );
+    google.maps.event.addDomListener(document.getElementById("livingston"), "click", function (ev) {
+        map.setCenter(livingstonMarker.getPosition());
+    });
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
