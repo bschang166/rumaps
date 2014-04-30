@@ -1,3 +1,10 @@
+var map;
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var stepDisplay;
+var markerArray = [];
+
+
 function CoordMapType(tileSize) {
     this.tileSize = tileSize;
 }
@@ -36,12 +43,6 @@ var livingstonMapType = new google.maps.ImageMapType({
     tileSize: new google.maps.Size(256, 256)
 });
 
-var map;
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
-var stepDisplay;
-var markerArray = [];
-
 /**
  * Gets the values for id's "start" and "end" and displays the directions if possible
  */
@@ -59,7 +60,7 @@ function calcRoute() {
     var request = {
         origin:start,
         destination:end,
-        travelMode: google.maps.TravelMode.DRIVING
+        travelMode: google.maps.TravelMode.WALKING
     };
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
@@ -90,6 +91,7 @@ function showSteps(directionResult) {
 
 function attachInstructionText(marker, text) {
     google.maps.event.addListener(marker, 'click', function() {
+        alert(text);
         // Open an info window when the marker is clicked on,
         // containing the text of the step.
         stepDisplay.setContent(text);
@@ -123,13 +125,15 @@ function initialize() {
     map.setOptions(mapOptions);
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(control)
 
-    stepDisplay = new google.maps.infoWindow();
 
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
    //map.overlayMapTypes.push(livingstonMapType);
    // map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
+
+
+    stepDisplay = new google.maps.infoWindow();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
