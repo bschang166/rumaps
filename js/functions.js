@@ -89,7 +89,6 @@ function showSteps(directionResult) {
     }
 }
 
-//Problem here, the listener seems to work (alerts with proper text), but it doesn't open it in a little window
 /**
  * Attaches instructions to the marker, displays when clicked
  * @param marker
@@ -97,7 +96,6 @@ function showSteps(directionResult) {
  */
 function attachInstructionText(marker, text) {
     google.maps.event.addListener(marker, 'click', function() {
-        alert(text);//TEST
         // Open an info window when the marker is clicked on,
         // containing the text of the step.
         stepDisplay.setContent(text);
@@ -138,7 +136,7 @@ function initialize() {
    // map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 
 
-    stepDisplay = new google.maps.infoWindow();
+    stepDisplay = new google.maps.InfoWindow();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
