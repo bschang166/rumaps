@@ -1,3 +1,10 @@
+var map;
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var stepDisplay;
+var markerArray = [];
+
+
 function CoordMapType(tileSize) {
     this.tileSize = tileSize;
 }
@@ -36,32 +43,74 @@ var livingstonMapType = new google.maps.ImageMapType({
     tileSize: new google.maps.Size(256, 256)
 });
 
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
-
 /**
  * Gets the values for id's "start" and "end" and displays the directions if possible
  */
 function calcRoute() {
+    // First, remove any existing markers from the map.
+    for (var i = 0; i < markerArray.length; i++) {
+        markerArray[i].setMap(null);
+    }
+
+    // Now, clear the array itself.
+    markerArray = [];
+
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
     var request = {
-        origin: start,
-        destination: end,
-        travelMode: google.maps.TravelMode.DRIVING
+        origin:start,
+        destination:end,
+        travelMode: google.maps.TravelMode.WALKING
     };
     directionsService.route(request, function (response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
+            var warnings = document.getElementById('warnings_panel');
+            warnings.innerHTML = '<b>' + response.routes[0].warnings + '</b>';
             directionsDisplay.setDirections(response);
+            showSteps(response);
         }
     });
 }
 
+function showSteps(directionResult) {
+    // For each step, place a marker, and add the text to the marker's
+    // info window. Also attach the marker to an array so we
+    // can keep track of it and remove it when calculating new
+    // routes.
+    var myRoute = directionResult.routes[0].legs[0];
+
+    for (var i = 0; i < myRoute.steps.length; i++) {
+        var marker = new google.maps.Marker({
+            position: myRoute.steps[i].start_location,
+            map: map
+        });
+        attachInstructionText(marker, myRoute.steps[i].instructions);
+        markerArray[i] = marker;
+    }
+}
+
+/**
+ * Attaches instructions to the marker, displays when clicked
+ * @param marker
+ * @param text
+ */
+function attachInstructionText(marker, text) {
+    google.maps.event.addListener(marker, 'click', function() {
+        // Open an info window when the marker is clicked on,
+        // containing the text of the step.
+        stepDisplay.setContent(text);
+        stepDisplay.open(map, marker);
+    });
+}
+
 function initialize() {
-    var map;
     var mapOptions;
 
     map = new google.maps.Map(document.getElementById("map-canvas"));
+
+    var rendererOptions = {
+        map: map
+    }
 
     mapOptions = {
         center: new google.maps.LatLng(40.52349, -74.43723),
@@ -79,7 +128,7 @@ function initialize() {
     var directionControl = document.getElementById('control');
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(directionControl)
 
-    directionsDisplay = new google.maps.DirectionsRenderer()
+    directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
@@ -109,6 +158,7 @@ function initialize() {
         map.setCenter(livingstonMarker.getPosition());
     });
 
+    stepDisplay = new google.maps.InfoWindow();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
