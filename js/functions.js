@@ -4,7 +4,26 @@ var directionsService = new google.maps.DirectionsService();
 var stepDisplay;
 var markerArray = [];
 
+/**
+ * Livingston maptype, returns images within specific coordinates (Livingston Campus)
+ * @type {google.maps.ImageMapType}
+ */
+var livingstonMapType = new google.maps.ImageMapType({
+    getTileUrl: function (coord, zoom) {
+        if (zoom === 17) {
+            if (coord.x >= 38432 && coord.x <= 38436 && coord.y >= 49370 && coord.y <= 49373) {
+                return 'images/Livingston-Map-' + coord.x + '-' + coord.y + ".gif";
+            }
+        }
+    },
+    tileSize: new google.maps.Size(256, 256)
+});
 
+/**
+ * CoordMapType constructor
+ * @param tileSize
+ * @constructor
+ */
 function CoordMapType(tileSize) {
     this.tileSize = tileSize;
 }
@@ -27,21 +46,6 @@ CoordMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
     div.style.borderColor = '#AAAAAA';
     return div;
 };
-
-/**
- * Livingston maptype, returns images within specific coordinates (Livingston Campus)
- * @type {google.maps.ImageMapType}
- */
-var livingstonMapType = new google.maps.ImageMapType({
-    getTileUrl: function (coord, zoom) {
-        if (zoom === 17) {
-            if (coord.x >= 38432 && coord.x <= 38436 && coord.y >= 49370 && coord.y <= 49373) {
-                return 'images/Livingston-Map-' + coord.x + '-' + coord.y + ".gif";
-            }
-        }
-    },
-    tileSize: new google.maps.Size(256, 256)
-});
 
 /**
  * Gets the values for id's "start" and "end" and displays the directions if possible
@@ -72,6 +76,10 @@ function calcRoute() {
     });
 }
 
+/**
+ * Places markers along the travel route
+ * @param directionResult
+ */
 function showSteps(directionResult) {
     // For each step, place a marker, and add the text to the marker's
     // info window. Also attach the marker to an array so we
@@ -105,12 +113,25 @@ function attachInstructionText(marker, text) {
 
 function initialize() {
     var mapOptions;
-
+    var directionControl = document.getElementById('control');
     map = new google.maps.Map(document.getElementById("map-canvas"));
-
     var rendererOptions = {
         map: map
-    }
+    };
+    var buschMarker = new google.maps.Marker(
+        {
+            position: new google.maps.LatLng(40.523325, -74.458694),
+            map: map,
+            title: 'my 2nd title'
+        }
+    );
+    var livingstonMarker = new google.maps.Marker(
+        {
+            position: new google.maps.LatLng(40.523484, -74.437129),
+            map: map,
+            title: 'my 2nd title'
+        }
+    );
 
     mapOptions = {
         center: new google.maps.LatLng(40.52349, -74.43723),
@@ -124,9 +145,7 @@ function initialize() {
     };
     map.setOptions(mapOptions);
 
-    //Search form for directions
-    var directionControl = document.getElementById('control');
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(directionControl)
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(directionControl);
 
     directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
     directionsDisplay.setMap(map);
@@ -136,24 +155,10 @@ function initialize() {
     map.overlayMapTypes.push(livingstonMapType);
     // map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 
-    var buschMarker = new google.maps.Marker(
-        {
-            position: new google.maps.LatLng(40.523325, -74.458694),
-            map: map,
-            title: 'my 2nd title'
-        }
-    );
+    //Event listeners for campus buttons
     google.maps.event.addDomListener(document.getElementById("busch"), "click", function (ev) {
         map.setCenter(buschMarker.getPosition());
     });
-
-    var livingstonMarker = new google.maps.Marker(
-        {
-            position: new google.maps.LatLng(40.523484, -74.437129),
-            map: map,
-            title: 'my 2nd title'
-        }
-    );
     google.maps.event.addDomListener(document.getElementById("livingston"), "click", function (ev) {
         map.setCenter(livingstonMarker.getPosition());
     });
