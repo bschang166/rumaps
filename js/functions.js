@@ -5,6 +5,42 @@ var stepDisplay;
 var markerArray = [];
 
 /**
+ * Gets the user's latitude and longitude
+ */
+function getMyLocation()
+{
+    var start = document.getElementById("start");
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    }
+    else{
+        alert("Geolocation is not supported by this browser.");
+    }
+
+    function showPosition(position){
+        //enters the position in the text field
+        start.value = "(" + position.coords.latitude + ", " + position.coords.longitude + ")";
+    }
+    function showError(error)
+    {
+        switch(error.code)
+        {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.");
+                break;
+        }
+    }
+}
+/**
  * Livingston maptype, returns images within specific coordinates (Livingston Campus)
  * @type {google.maps.ImageMapType}
  */
@@ -153,7 +189,7 @@ function initialize() {
 
     //Overlay types
     map.overlayMapTypes.push(livingstonMapType);
-    // map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
+    //map.overlayMapTypes.push(new CoordMapType(new google.maps.Size(256, 256)));
 
     //Event listeners for campus buttons
     google.maps.event.addDomListener(document.getElementById("busch"), "click", function (ev) {

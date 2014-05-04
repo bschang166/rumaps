@@ -35,7 +35,9 @@
 </header>
 
 <div id="control">
+    <!--The on key down functions respond to the enter key-->
     <b>From:</b>
+    <button onclick="getMyLocation()">Here</button>
     <input id="start" type="text" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
     <b>To:</b>
     <input id="end" type="text" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
