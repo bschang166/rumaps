@@ -158,14 +158,14 @@ function initialize() {
         {
             position: new google.maps.LatLng(40.523325, -74.458694),
             map: map,
-            title: 'my 2nd title'
+            title: 'Busch Campus'
         }
     );
     var livingstonMarker = new google.maps.Marker(
         {
             position: new google.maps.LatLng(40.523484, -74.437129),
             map: map,
-            title: 'my 2nd title'
+            title: 'Livingston Campus'
         }
     );
 
