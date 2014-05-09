@@ -36,7 +36,7 @@
         <input type="text" id="start" class="form-control" placeholder="From" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
         <!--<b>To:</b>-->
         <input type="text"  id="end" class="form-control" placeholder="To" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
-        <button class="btn btn-success" onclick="calcRoute()">Go!</button>
+        <button id="getDir" class="btn btn-success" onclick="calcRoute()">Go!</button>
     </div>
 
     <div id="map-canvas"></div>
