@@ -39,11 +39,19 @@
         <button id="getDir" class="btn btn-success" onclick="calcRoute()">Go!</button>
     </div>
 
-    <div id="map-canvas"></div>
+    <div class="container" style="height: 90%">
+        <div class="row" style="height: inherit">
+            <div id="map-canvas" class="col-md-8"></div>
+        </div>
 
-    <div id="directions-panel" class="col-md-12"></div>
+        <div class="row">
+            <div id="directions-panel" class="col-md-12"></div>
+        </div>
 
-    <div id="warnings_panel"></div>
+        <div class="row">
+            <div id="warnings_panel"></div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap/affix.js"></script>
