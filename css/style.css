@@ -1,18 +1,29 @@
 /* line 1, ../scss/style.scss */
 html, body {
   height: 100%;
+  overflow: hidden;
 }
 
-/* line 5, ../scss/style.scss */
+/* line 6, ../scss/style.scss */
+#navbar {
+  width: 100%;
+  float: left;
+}
+
+/* line 11, ../scss/style.scss */
 #map-canvas {
   height: 100%;
   width: 100%;
 }
 
-/* line 10, ../scss/style.scss */
+/* line 16, ../scss/style.scss */
 #control {
   background-color: #ffffff;
-  padding: 3px;
   border-radius: 5px;
-  box-shadow: 0px 2px 10px #000000;
+  box-shadow: 0 2px 10px #000000;
+  padding: 3px;
+  position: absolute;
+  top: 55px;
+  right: 0;
+  z-index: 1;
 }

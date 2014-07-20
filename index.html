@@ -9,54 +9,53 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-default" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Rutgers Map</a>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a id="livingston" href="#">Livingston</a></li>
-                <li><a id="busch" href="#">Busch</a></li>
-                <li><a id="college ave" href="#">College Ave</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div id="control" class="form-inline center-block" >
-        <!--The on key down functions repond to the enter key-->
-        <!--<b>From:</b>-->
-        <button class="btn btn-danger" onclick="getMyLocation()">My location</button>
-        <input type="text" id="start" class="form-control" placeholder="From" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
-        <!--<b>To:</b>-->
-        <input type="text"  id="end" class="form-control" placeholder="To" onkeydown="if (event.keyCode == 13) {document.getElementById('getDir').click()}">
-        <button id="getDir" class="btn btn-success" onclick="calcRoute()">Go!</button>
+<nav id="navbar" class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">Rutgers Map</a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
     </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li><a id="livingston" href="#">Livingston</a></li>
+            <li><a id="busch" href="#">Busch</a></li>
+            <li><a id="college ave" href="#">College Ave</a></li>
+        </ul>
+    </div>
+</nav>
 
-    <div id="map-canvas"></div>
+<div id="control" class="form-inline center-block">
+    <button class="btn btn-danger" onclick="getMyLocation()">My location</button>
+    <input type="text" id="start" class="form-control" placeholder="From"
+           onkeydown="if (event.keyCode == 13) {calcRoute()}">
+    <input type="text" id="end" class="form-control" placeholder="To"
+           onkeydown="if (event.keyCode == 13) {calcRoute()}">
+    <button id="getDir" class="btn btn-success" onclick="calcRoute()">Go!</button>
+</div>
 
-    <div id="directions-panel" class="col-md-12"></div>
+<div id="map-canvas"></div>
 
-    <div id="warnings_panel"></div>
+<div id="directions-panel" class="col-md-12"></div>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap/affix.js"></script>
-    <script type="text/javascript" src="js/bootstrap/alert.js"></script>
-    <script type="text/javascript" src="js/bootstrap/button.js"></script>
-    <script type="text/javascript" src="js/bootstrap/carousel.js"></script>
-    <script type="text/javascript" src="js/bootstrap/collapse.js"></script>
-    <script type="text/javascript" src="js/bootstrap/dropdown.js"></script>
-    <script type="text/javascript" src="js/bootstrap/modal.js"></script>
-    <script type="text/javascript" src="js/bootstrap/tooltip.js"></script>
-    <script type="text/javascript" src="js/bootstrap/popover.js"></script>
-    <script type="text/javascript" src="js/bootstrap/scrollspy.js"></script>
-    <script type="text/javascript" src="js/bootstrap/tab.js"></script>
-    <script type="text/javascript" src="js/bootstrap/transition.js"></script>
+<div id="warnings_panel"></div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap/affix.js"></script>
+<script type="text/javascript" src="js/bootstrap/alert.js"></script>
+<script type="text/javascript" src="js/bootstrap/button.js"></script>
+<script type="text/javascript" src="js/bootstrap/carousel.js"></script>
+<script type="text/javascript" src="js/bootstrap/collapse.js"></script>
+<script type="text/javascript" src="js/bootstrap/dropdown.js"></script>
+<script type="text/javascript" src="js/bootstrap/modal.js"></script>
+<script type="text/javascript" src="js/bootstrap/tooltip.js"></script>
+<script type="text/javascript" src="js/bootstrap/popover.js"></script>
+<script type="text/javascript" src="js/bootstrap/scrollspy.js"></script>
+<script type="text/javascript" src="js/bootstrap/tab.js"></script>
+<script type="text/javascript" src="js/bootstrap/transition.js"></script>
 </body>
 </html>

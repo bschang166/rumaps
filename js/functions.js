@@ -7,24 +7,22 @@ var markerArray = [];
 /**
  * Gets the user's latitude and longitude
  */
-function getMyLocation()
-{
+function getMyLocation() {
     var start = document.getElementById("start");
-    if (navigator.geolocation){
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     }
-    else{
+    else {
         alert("Geolocation is not supported by this browser.");
     }
 
-    function showPosition(position){
+    function showPosition(position) {
         //enters the position in the text field
         start.value = "(" + position.coords.latitude + ", " + position.coords.longitude + ")";
     }
-    function showError(error)
-    {
-        switch(error.code)
-        {
+
+    function showError(error) {
+        switch (error.code) {
             case error.PERMISSION_DENIED:
                 alert("User denied the request for Geolocation.");
                 break;
@@ -98,8 +96,8 @@ function calcRoute() {
     var start = document.getElementById('start').value;
     var end = document.getElementById('end').value;
     var request = {
-        origin:start,
-        destination:end,
+        origin: start,
+        destination: end,
         travelMode: google.maps.TravelMode.WALKING
     };
     directionsService.route(request, function (response, status) {
@@ -139,7 +137,7 @@ function showSteps(directionResult) {
  * @param text
  */
 function attachInstructionText(marker, text) {
-    google.maps.event.addListener(marker, 'click', function() {
+    google.maps.event.addListener(marker, 'click', function () {
         // Open an info window when the marker is clicked on,
         // containing the text of the step.
         stepDisplay.setContent(text);
@@ -181,11 +179,9 @@ function initialize() {
     };
     map.setOptions(mapOptions);
 
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(directionControl);
-
     directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
     directionsDisplay.setMap(map);
-    directionsDisplay.setPanel(document.getElementById('directions-panel'));
+    directionsDisplay.setPanel(document.getElementById("directions-panel"));
 
     //Overlay types
     map.overlayMapTypes.push(livingstonMapType);

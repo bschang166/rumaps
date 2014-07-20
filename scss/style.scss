@@ -1,19 +1,25 @@
-html,body{
-  height:100%;
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
-#map-canvas{
-  height:100%;
-  width:100%;
+#navbar {
+  width: 100%;
+  float: left;
 }
 
-#control{
+#map-canvas {
+  height: 100%;
+  width: 100%;
+}
+
+#control {
   background-color: #ffffff;
-  padding: 3px;
   border-radius: 5px;
-  box-shadow: 0px 2px 10px #000000;
-}
-
-#directions-panel{
-
+  box-shadow: 0 2px 10px #000000;
+  padding: 3px;
+  position: absolute;
+  top: 55px;
+  right: 0;
+  z-index: 1;
 }
