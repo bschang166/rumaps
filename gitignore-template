@@ -6,10 +6,6 @@
 /Rutgers_map/node_modules
 /Rutgers_map/bower_components
 
-test.html
-temp.xml
-.gitignore
-
 *.iml
-*.ai
-*.psd
+
+.gitignore
