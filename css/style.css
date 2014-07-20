@@ -1,0 +1,18 @@
+/* line 1, ../scss/style.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 5, ../scss/style.scss */
+#map-canvas {
+  height: 100%;
+  width: 100%;
+}
+
+/* line 10, ../scss/style.scss */
+#control {
+  background-color: #ffffff;
+  padding: 3px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 10px #000000;
+}

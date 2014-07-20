@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Untitled map</name>
+		<description><![CDATA[]]></description>
+		<Folder>
+			<name>Untitled layer</name>
+			<Placemark>
+				<styleUrl>#poly-000000-1-76</styleUrl>
+				<name>Livingston Student Center
+</name>
+				<ExtendedData>
+				</ExtendedData>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<tessellate>1</tessellate>
+							<coordinates>-74.4375323,40.5237688,0.0 -74.437838,40.5234294,0.0 -74.4376355,40.5233203,0.0 -74.4376221,40.5233376,0.0 -74.4372587,40.523147,0.0 -74.4371353,40.5232846,0.0 -74.4370843,40.5232581,0.0 -74.4370508,40.5232561,0.0 -74.4370213,40.5231786,0.0 -74.4368671,40.5232,0.0 -74.436906,40.5233019,0.0 -74.4368617,40.5233478,0.0 -74.4368751,40.5233549,0.0 -74.4368416,40.5233855,0.0 -74.436855,40.5233947,0.0 -74.4367504,40.5235017,0.0 -74.4367732,40.5235109,0.0 -74.4366713,40.52362,0.0 -74.4366874,40.5236271,0.0 -74.4365385,40.5237882,0.0 -74.4365908,40.5238167,0.0 -74.4366015,40.5238076,0.0 -74.4367276,40.5238799,0.0 -74.4367062,40.5239003,0.0 -74.4368041,40.5239513,0.0 -74.4368993,40.5238494,0.0 -74.4370361,40.5239268,0.0 -74.4373016,40.5236332,0.0 -74.4373392,40.5236547,0.0 -74.4373284,40.5236648,0.0 -74.4375323,40.5237688,0.0</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Placemark>
+				<styleUrl>#poly-000000-1-76</styleUrl>
+				<name>Building</name>
+				<ExtendedData>
+				</ExtendedData>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<tessellate>1</tessellate>
+							<coordinates>-74.4373821,40.5227841,0.0 -74.4377294,40.5224242,0.0 -74.4373257,40.5221979,0.0 -74.4369918,40.5225567,0.0 -74.4373821,40.5227841,0.0</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+		</Folder>
+		<Style id='poly-000000-1-76'>
+			<LineStyle>
+				<color>ff000000</color>
+				<width>1</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>4C000000</color>
+				<fill>1</fill>
+				<outline>1</outline>
+			</PolyStyle>
+		</Style>
+	</Document>
+</kml>

@@ -200,6 +200,12 @@ function initialize() {
     });
 
     stepDisplay = new google.maps.InfoWindow();
+
+    function showLatLng(event) {
+      console.log(event);
+    }
+
+    google.maps.event.addListener(map, 'click', showLatLng);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
