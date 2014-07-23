@@ -1,54 +1,59 @@
-﻿'use strict';
-
-/*
+﻿/*
   ru.map.js
   module for high-level map functionalities
 */
 
+'use strict';
+
 ru.map = (function () {
   var
-      map, mapOptions,
-      getMap, initMap,
-      initialize,
-      initModule;
+    util = ru.util.js,
+    configMap,
 
-  mapOptions = {
-    center: new google.maps.LatLng(40.52349, -74.43723),
-    zoom: 17
+    map, mapOptions,
+
+    configModule,
+    initModule;
+
+  // ------------- BEGIN MODULE CONFIG --------------------
+
+  configMap = {
+    map_model: null,
+    map_options: {
+      center: new google.maps.LatLng(40.523484, -74.437129), // Livingston Campus
+      zoom: 17
+    },
+
+    allowed_config: {
+      map_model: true, 
+      map_options: true,
+    }
   };
+  // ------------- END MODULE CONFIG -------------------
 
-  getMap = function () {
-    return map;
-  }
-
-  /*
-  * Initialize map instance, with provided map options if given otherwise default options are used
-  *
-  * @param {HTMLElement} $container - DOM container for map, default is set to #map-canvas
-  * @param {Object} options - map options for the constructed map instance
-  */
-  initMap = function ($container, options) {
-    $container = $container || document.getElementById('map-canvas');
-    mapOptions = options || mapOptions;
-    map = new google.maps.Map($container, mapOptions);
-  }
 
   //------------------- BEGIN EVENT HANLDERS-------------------
-  initialize = function ($container, options) {
-    initMap($container, options);
-
-    ru.map.drawing.initModule();
-  }
   //------------------- END EVENT HANLDERS-------------------
 
-  initModule = function ($container, options) {
-    initialize = initialize.bind(null,$container,options)
+  // -------------- BEGIN PUBLIC FUNCTIONS -----------------------
 
-    google.maps.event.addDomListener(window, 'load', initialize);
+  configModule = function (configs, allowed) {
+    util.conditionalExtend(configMap, configs, allowed);
   }
 
+  initModule = function ($container, options) {
+    
+  }
+  // -------------- END PUBLIC FUNCTIONS ------------------------
+
   return {
-    getMap: getMap,
+    configModule: configModule,
     initModule : initModule
   }
 }());
+
+
+parseMapKml = function (kmlData) {
+  var results = new KmlParser(kmlData).parse();
+  return results;
+}

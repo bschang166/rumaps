@@ -3,10 +3,39 @@
   Module for utility functions
 */
 
+'use strict';
+
 ru.util = (function () {
 
   var
+    isObject,
+    conditionalExtend,
     KmlParser;
+
+  isObject = function(arg){
+    if (Object.prototype.toString.call(arg) === '[object Object]'){
+      return true;
+    }
+    return false;
+  };
+
+  conditionalExtend = function (target, src, allowed) {
+    if (!src) {
+      return;
+    }
+
+    for (prop in src) {
+      if (src.hasOwnProperty(prop)) {
+        if (allowed[prop] === true) {
+          if (isObject(target) && isObject(src)) {
+            $.extend(target, src);
+          } else {
+            target[prop] = src[prop];
+          }
+        }
+      }
+    }
+  };
 
   KmlParser = function (kmlData) {
     this.data = kmlData;
@@ -54,7 +83,8 @@ ru.util = (function () {
   };
 
   return {
-    KmlParser: KmlParser
+    KmlParser: KmlParser,
+    conditionalExtend : conditionalExtend
   };
 
 }());

@@ -2,92 +2,118 @@
   ru.map.drawings.js
   Retrieves map kml data from server and draws polygon onto map
   
-  refactor, documentation
+  Dependencies < global var >:
+  - jquery.js < $ >
+  - pubsub.js < PubSub >
   
-  remove kml html jquery leftover
 */
 
 'use strict';
 
 ru.map.drawing = (function () {
   var
-    map,
-    polyline, polylineOptions,
-    polygon, polygonOptions,
-    jqueryMap = {},
-    placemarkList = [],
+    util = ru.util,
+    configMap,
 
-    KmlParser = ru.util.KmlParser,
+    drawPolygon,
+    removePolygon,
+    onChangeMap,
 
-    setJqueryMap,
-    getMapKml, parseMapKml,
-    drawPolygonToMap,
+    configModule,
     initModule;
 
-  setJqueryMap = function () {
-    jqueryMap = {
-      wrapper: $('#wrapper')
-    };
+  // -------- BEGIN MODULE CONFIGURATION -----------
+  configMap = {
+
+    map_model: null,
+    map: null,
+    polygon_option: {
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 3,
+      fillColor: '#FF0000',
+      fillOpacity: 0.35
+    },
+
+    allowed_config: {
+      map_model: true,
+      map: true,
+      polygon_option: true
+    }
+
   };
+  // -------- END MODULE CONFIGURATION -----------
 
-  getMapKml = function () {
-    $.ajax({
-      type: 'GET',
-      url: '/map/kml/test'
-    }).then(
-      function (kmlData) {
-        var parsedData = parseMapKml(null, kmlData);
-        drawPolygonToMap(parsedData, map);
-      },
-      function (err) {
-        throw err;
-      }
-    )
-  }
-
-  parseMapKml = function (err,kmlData) {
-    if (err) throw err;
-
-    var results = new KmlParser(kmlData).parse();
-    return results;
-  }
   //------------------- BEGIN DRAWINGS FUNCTIONS-------------------
 
-  drawPolygonToMap = function (polygonEntries, map) {
+  drawPolygon = function (polygonEntries) {
     for (var i = 0, n = polygonEntries.length; i < n; i++) {
       var
-        entry, polygon;
+        entry, paths, title,
+        polygonOptions = {},
+        polygon;
 
       entry = polygonEntries[i];
 
-      polygon = new google.maps.Polygon({
-        paths: entry.coords,
-        title: entry.title,
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 3,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35
-      });
-      polygon.setMap(map);
+      paths = entry.paths;
+      title = entry.title;
+
+      if (paths.length < 2) {
+        throw new Error('ERROR: polygon.paths option\n'
+          + 'Polygon entry needs to have at least 3 coordinates\n'
+          + entry);
+      }
+      if (title === '') {
+        throw new Error('ERROR: polygon.title option\n'
+          + 'Polygon entry needs to have a title\n'
+          + entry);
+      }
+
+      polygonOptions = $.extend(polygonOptions, configMap.polygon_option);
+
+      polygon = new google.maps.Polygon(polygonOptions);
+      polygon.setMap(configMap.map);
+
+      configMap.map_model.addPolygon(polygon);
     }
-  }
+  };
+
+  removePolygon = function (key) {
+    var
+      polygonStore = configMap.map_model.getPolygonStore();
+
+    if (polygonStore.hasOwnProperty(key)) {
+      if (polygonStore[key].length > 0) {
+        polygonStore[key].setMap(null);
+        delete polygonStore[key];
+      }
+    }
+  };
   //------------------- END DRAWINGS FUNCTIONS-------------------
 
   //------------------- BEGIN EVENT HANLDERS-------------------
+  onChangeMap = function(msg, data){
+    if (msg === 'changestate.location') {
+      var
+        polygonLocation = configMap.map_model.getPolygonStore(data.location);
+    }
+  };
   //------------------- END EVENT HANLDERS-------------------
 
+  // ---------------BEGIN PUBLIC FUNCTIONS ------------------
+
+  configModule = function (configs) {
+    util.conditionalExtend(configMap, configs, configMap.allowed_config);
+  };
+
   initModule = function () {
-    var parsedData;
+    PubSub.subscribe('changestate.location', onChangeMap);
+  };
 
-    map = ru.map.getMap();
-    setJqueryMap();
-
-    getMapKml();
-
-  }
+  // ---------------END PUBLIC FUNCTIONS ------------------
 
   return {
+    configModule: configModule,
     initModule: initModule
   };
 
