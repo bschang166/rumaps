@@ -1,0 +1,11 @@
+/.idea
+/.sass-cache
+/out
+
+/Rutgers_map/css
+/Rutgers_map/node_modules
+/Rutgers_map/bower_components
+
+*.iml
+
+.gitignore
