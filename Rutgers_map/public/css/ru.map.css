@@ -11,11 +11,13 @@ body {
 
 #map-canvas {
   height: 100%;
-  width: 75%;
+  width: 100%;
   float: left;
 }
 
 #wrapper{
-  float: left;
+  position: absolute;
+  right: -25%;
   width: 25%;
+  z-index: 9999;
 }

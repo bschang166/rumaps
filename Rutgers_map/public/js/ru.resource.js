@@ -76,11 +76,11 @@ ru.resource = (function () {
                     var overlayOptions = {};
                     $.extend(overlayOptions, configMap.overlay_options[overlayType], overlayOpts);
                     data[overlayType][i] = new google.maps[overlayType](overlayOptions);
-                });
 
-                database.insert({
-                    overlayType: overlayType,
-                    overlay: data[overlayType]
+                    database.insert({
+                        overlayType: overlayType,
+                        overlayObject: data[overlayType][i]
+                    });
                 });
             }
         }
@@ -92,8 +92,11 @@ ru.resource = (function () {
       a message is published notifying the app that the resources are ready to be used
      */
     requestMapData = function () {
-        configMap.deferred_queue =
-            configMap.deferred_queue || [$.get("/map/kml/livingston", onGetResponse)];
+        configMap.deferred_queue =configMap.deferred_queue ||
+            [
+                $.get("/map/kml/livingston", onGetResponse),
+                $.get("/map/kml/busch", onGetResponse)
+            ];
         $.when.apply($, configMap.deferred_queue)
             .then(
             function () {
