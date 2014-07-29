@@ -18,8 +18,9 @@ var ru = (function () {
 
   initModule = function () {
     ru.model.initModule();
-    ru.resource.initModule();
     ru.render.initModule();
+    ru.resource.initModule();
+
   };
 
   return {

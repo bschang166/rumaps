@@ -80,6 +80,7 @@ ru.util = (function () {
         etc..
       }
         where overlayOptions = { title: "Object name", paths: [ Object coordinates ] }
+        TODO: parse <Style> in kml for additional overlayOptions ( stroke, fill styles )
      */
     KmlParser.prototype.parse = function () {
         var
