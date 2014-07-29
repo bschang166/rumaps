@@ -10,21 +10,30 @@
 
 
   <script type="text/javascript"
-          src="http://maps.googleapis.com/maps/api/js?libraries=visualization"></script>
+          src="http://maps.googleapis.com/maps/api/js"></script>
   <script src="jquery/dist/jquery.js"></script>
   <script src="pubsub-js/src/pubsub.js"></script>
+  <script src="taffydb/taffy.js"></script>
 
   <script src="js/ru.js"></script>
   <script src="js/ru.util.js"></script>
-  <script src="js/ru.map.js"></script>
-  <script src="js/ru.map.drawing.js"></script>
-
+  <script src="js/ru.model.js"></script>
+  <script src="js/ru.resource.js"></script>
+  <script src="js/ru.render.js"></script>
   <script>
-    $(function () { ru.initModule(); });
-    
-   
-  </script>
+      $(function(){
+          ru.configModule();
+          ru.initModule();
 
+          /*
+          var map = new google.maps.Map(document.getElementById("map-canvas"), {
+              zoom: 17,
+              center: new google.maps.LatLng(40.523484, -74.437129) // Livingston Campus
+          });
+          */
+      });
+
+  </script>
 </head>
 <body>
   <div id="map-canvas"></div>
@@ -32,5 +41,6 @@
   <div id="wrapper">
     
   </div>
+  <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
 </html>

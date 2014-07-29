@@ -2,7 +2,10 @@
   "name": "Rutgers_map",
   "version": "0.0.0",
   "homepage": "https://github.com/ksrb/rumaps",
-  "authors": ["Benson Chang", "Kevin Suen"],
+  "authors": [
+    "Benson Chang",
+    "Kevin Suen"
+  ],
   "main": "\"public/css\"",
   "license": "MIT",
   "private": true,
@@ -15,6 +18,7 @@
   ],
   "dependencies": {
     "bootstrap": "~3.2.0",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "taffydb": "*"
   }
 }

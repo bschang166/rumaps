@@ -51,9 +51,3 @@ ru.map = (function () {
     initModule : initModule
   }
 }());
-
-
-parseMapKml = function (kmlData) {
-  var results = new KmlParser(kmlData).parse();
-  return results;
-}

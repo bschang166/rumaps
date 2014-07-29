@@ -21,10 +21,11 @@ app.get('/', function (req, res) {
 
 app.get('/map/kml/:name', function (req, res) {
   fs.readFile('./kml/' + req.params.name + '.kml', function (err, data) {
-    if (err) throw err;
-    console.log(data);
+    if (err) {throw err}
+    res.set('Content-Type', 'text/kml');
+    res.location(req.params.name);
     res.send(data);
-  })
+  });
 });
 
 server.listen(3000, function () {

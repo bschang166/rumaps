@@ -6,15 +6,25 @@
 'use strict';
 
 var ru = (function () {
-  var initModule;
+  var
+    configModule,
+    initModule;
+
+  configModule = function () {
+      ru.model.configModule();
+      ru.resource.configModule({map_model: ru.model});
+      ru.render.configModule({map_model: ru.model});
+  };
 
   initModule = function () {
     ru.model.initModule();
-    ru.map.initModule();
-  }
+    ru.resource.initModule();
+    ru.render.initModule();
+  };
 
   return {
-    initModule: initModule
+      configModule: configModule,
+      initModule  : initModule
   };
 
 }());

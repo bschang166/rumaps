@@ -1,90 +1,136 @@
 ﻿/*
-  ru.util.js
-  Module for utility functions
-*/
+ ru.util.js
+ Module for utility functions
+ */
 
 'use strict';
 
 ru.util = (function () {
 
-  var
-    isObject,
-    conditionalExtend,
-    KmlParser;
-
-  isObject = function(arg){
-    if (Object.prototype.toString.call(arg) === '[object Object]'){
-      return true;
-    }
-    return false;
-  };
-
-  conditionalExtend = function (target, src, allowed) {
-    if (!src) {
-      return;
-    }
-
-    for (prop in src) {
-      if (src.hasOwnProperty(prop)) {
-        if (allowed[prop] === true) {
-          if (isObject(target) && isObject(src)) {
-            $.extend(target, src);
-          } else {
-            target[prop] = src[prop];
-          }
-        }
-      }
-    }
-  };
-
-  KmlParser = function (kmlData) {
-    this.data = kmlData;
-  };
-  KmlParser.prototype.parse = function () {
-
     var
-      hiddenWrapper = $(document.createElement('div')),
-      entries,
-      placemarkList = [];
+        isObject,
+        conditionalExtend,
+        KmlParser;
 
-    hiddenWrapper.html(this.data);
+    isObject = function ( arg ) {
+        if (Object.prototype.toString.call(arg) === '[object Object]') {
+            return true;
+        }
+        return false;
+    };
 
-    entries = hiddenWrapper.find('placemark');
+    conditionalExtend = function ( target, src, allowed ) {
+        if (!src) {
+            return;
+        }
 
-    for (var i = 0, n = entries.length; i < n; i++) {
-      var
-        currentEntry, coordinates,
-        placemark = {};
+        for (var prop in src) {
+            if (src.hasOwnProperty(prop)) {
+                if (allowed[prop] === true) {
+                    if (isObject(target) && isObject(src)) {
+                        $.extend(target, src);
+                    } else {
+                        target[prop] = src[prop];
+                    }
+                }
+            }
+        }
+    };
 
-      currentEntry = entries.eq(i);
-      placemark.title = currentEntry.find('name').text();
+    KmlParser = function ( kmlData ) {
+        this.data = kmlData;
+        this.xmlDoc = $.parseXML(kmlData);
+        this.selectors = "Polygon";
+    };
+    /*
+    Purpose: Allows user to assign selectors to filter the overlay which will be parsed.
+      Ex. setOverlayTypeSelector("Polygon", "Point", "LineString")
 
-      coordinates = currentEntry.find('coordinates').text().split(',0.0 ');
+    @method setOverlayTypeSelector
+    @param {string}|{array} - Tag names of overlay type to be selected
 
-      coordinates.forEach(function (coordset, i) {
+    TODO: Google map engine uses different overlay type name from Google Map API(polygon is exception)
+      -> Ex. A "Point" in google map engine is "Marker" in Google Map API
+               "LineString"                    "Polyline"
+        Consider have either a built-in dictionary or have user pass in, { Point: "Marker" }
+     */
+    KmlParser.prototype.setOverlayTypeSelector = function () {
+        var argsArray;
+        if ($.isArray(arguments[0])){
+            argsArray = arguments[0];
+        }
+        else if(arguments.length > 1){
+            argsArray = Array.prototype.slice.apply(this, arguments);
+        }
+        this.selectors = argsArray.join();
+    };
+    /*
+    Purpose: Parses kmlData to an object consisting of arrays for each set selectors.
+      Currently uses the following tag names:
+        -Placemark, to find each overlay object, ex. (Polygon1, Polygon2, etc.)
+          -> set selectors, to find the overlay types, ex. polygon, point, linestring...
+          -> name, to find the title of each overlay object inside a placemark
+          -> coordinates, to find the paths of overlay object
+
+    @method parse
+    @return {object} The object with parsed data formatted in the following structure:
+      returnedObject = {
+        Polygon: [ overlayOptions ],
+        OverlayType2: [ overlayOptions ],
+        etc..
+      }
+        where overlayOptions = { title: "Object name", paths: [ Object coordinates ] }
+     */
+    KmlParser.prototype.parse = function () {
         var
-          coords,
-          lat, long;
+            xml,
+            placemarkNodes,
+            overlays = {};
 
-        coords = coordset.split(',');
-        long = parseFloat(coords[0]);
-        lat = parseFloat(coords[1]);
+        xml = $(this.xmlDoc);
+        placemarkNodes = xml.find('Placemark');
 
-        coordinates[i] = new google.maps.LatLng(lat, long);
-      });
+        for (var i = 0, n = placemarkNodes.length; i < n; i++) {
+            var
+                currentPlacemark, title, overlayType, paths;
 
-      placemark.coords = coordinates;
+            // Each placemark should have only 1 title and belong to a single overlay type, ex. polygon
+            currentPlacemark = placemarkNodes.eq(i);
+            title = currentPlacemark.find('name').eq(0).text();
 
-      placemarkList.push(placemark);
+            overlayType = currentPlacemark.find(this.selectors).eq(0).prop("tagName");
+            if (!overlayType){
+                return;
+            }
+            if (!overlays[overlayType]){
+                overlays[overlayType] = [];
+            }
 
-    }
-    return placemarkList;
+            paths = currentPlacemark.find('coordinates').eq(0).text().split(',0.0 ');
+            paths.forEach(function ( latLongStr, i ) {
+                var
+                    latLong,
+                    lat, long;
 
-  };
+                latLong = latLongStr.split(',');
+                long = parseFloat(latLong[0]);
+                lat = parseFloat(latLong[1]);
 
-  return {
-    KmlParser: KmlParser,
-    conditionalExtend : conditionalExtend
-  };
+                paths[i] = new google.maps.LatLng(lat, long);
+            });
+
+            overlays[overlayType].push({
+                title: title,
+                paths: paths
+            });
+        }
+        return overlays;
+    };
+
+    return {
+        isObject         : isObject,
+        conditionalExtend: conditionalExtend,
+        KmlParser        : KmlParser
+    };
 
 }());
