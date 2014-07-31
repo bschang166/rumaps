@@ -35,14 +35,13 @@ ru.render = (function () {
         }
     };
     stateMap = {
-      domCache: null,
-      location: "livingston"
+      domCache: null
     };
     // -------- END MODULE CONFIGURATION -----------
 
     setDomCache = function(){
       stateMap.domCache = {
-          $location: $(".location")
+          $location: $(".navbar-location")
       };
     };
     setDomEventHandler = function(){
@@ -75,11 +74,11 @@ ru.render = (function () {
         renderOverlay("busch");
     };
 
-    onLocationClick = function(){
+    onLocationClick = function(event){
         var
             mapOptions,
             map = ru.model.getMap(),
-            location = this.id;
+            location = event.target.id;
 
         switch(location){
             case "livingston":
@@ -102,15 +101,9 @@ ru.render = (function () {
                 break;
         }
         map.setOptions(mapOptions);
-        stateMap.location = location;
-        stateMap.domCache.$location.each(function(index, element){
-            if (element.id === stateMap.location){
-                $(element).addClass('active');
-            } else{
-                $(element).removeClass('active');
-            }
-        });
-
+        stateMap.domCache.$location.find(".active").removeClass("active");
+        $(event.target).parent("li").addClass("active");
+        return false;
     };
     //------------------- END EVENT HANLDERS-------------------
 

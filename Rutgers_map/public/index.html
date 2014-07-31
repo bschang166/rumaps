@@ -2,42 +2,30 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title></title>
-  <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" />
-  <link href="css/ru.map.css" rel="stylesheet" />
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
+    <link href="css/ru.map.css" rel="stylesheet"/>
 
 
-  <script type="text/javascript"
-          src="http://maps.googleapis.com/maps/api/js"></script>
-  <script src="jquery/dist/jquery.js"></script>
-  <script src="pubsub-js/src/pubsub.js"></script>
-  <script src="taffydb/taffy.js"></script>
+    <script type="text/javascript"
+            src="http://maps.googleapis.com/maps/api/js"></script>
 
-  <script src="js/ru.js"></script>
-  <script src="js/ru.util.js"></script>
-  <script src="js/ru.model.js"></script>
-  <script src="js/ru.resource.js"></script>
-  <script src="js/ru.render.js"></script>
-  <script>
-      $(function(){
-          ru.configModule();
-          ru.initModule();
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="pubsub-js/src/pubsub.js"></script>
+    <script src="taffydb/taffy.js"></script>
 
-          /*
-          var map = new google.maps.Map(document.getElementById("map-canvas"), {
-              zoom: 17,
-              center: new google.maps.LatLng(40.523484, -74.437129) // Livingston Campus
-          });
-          */
-      });
+    <script src="js/ru.js"></script>
+    <script src="js/ru.util.js"></script>
+    <script src="js/ru.model.js"></script>
+    <script src="js/ru.resource.js"></script>
+    <script src="js/ru.render.js"></script>
 
-
-  </script>
 </head>
 <body>
-  <nav id="navbar" class="navbar navbar-default" role="navigation">
+<nav id="navbar" class="navbar navbar-default" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
         <a class="navbar-brand" href="#">Rutgers Map</a>
@@ -49,25 +37,25 @@
         </button>
     </div>
     <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-            <li><a id="livingston" class="location" href="#">Livingston</a></li>
-            <li><a id="busch" class="location" href="#" >Busch</a></li>
-            <li><a id="college-ave" class="location" href="#">College Ave</a></li>
+        <ul class="nav navbar-nav navbar-location">
+            <li><a id="livingston" href="#">Livingston</a></li>
+            <li><a id="busch" href="#">Busch</a></li>
+            <li><a id="college-ave" href="#">College Ave</a></li>
         </ul>
     </div>
-  </nav>
+</nav>
 
-  <div id="map-canvas"></div>
+<div id="map-canvas"></div>
 
-  <aside id="wrapper">
-      <ul class="nav nav-pills">
-          <li class="active"><a href="#">Tab 1</a></li>
-          <li><a href="#">Tab 2</a></li>
-          <li><a href="#">Tab 3</a></li>
-      </ul>
-  </aside>
+<aside id="wrapper">
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#">Tab 1</a></li>
+        <li><a href="#">Tab 2</a></li>
+        <li><a href="#">Tab 3</a></li>
+    </ul>
+</aside>
 
-  </div>
-  <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+</div>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
 </html>

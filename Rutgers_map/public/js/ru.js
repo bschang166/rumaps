@@ -30,3 +30,14 @@ var ru = (function () {
 
 }());
 
+$(function () {
+    ru.configModule();
+    ru.initModule();
+
+    /*
+     var map = new google.maps.Map(document.getElementById("map-canvas"), {
+     zoom: 17,
+     center: new google.maps.LatLng(40.523484, -74.437129) // Livingston Campus
+     });
+     */
+});
