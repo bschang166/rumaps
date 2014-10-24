@@ -39,6 +39,7 @@ ru.maps.controller.selectionCtrl = (function(map){
     @return { Map Overlay } returns the overlay to use as highlighter
      */
     var createHighlighter = function(options){
+        options.icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
         return new google.maps.Marker(options);
     };
     /*
