@@ -1,0 +1,22 @@
+{
+  "name": "Rutgers_map",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ksrb/rumaps",
+  "authors": [
+    "Benson <chc6@njit.edu>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1",
+    "typeahead.js": "~0.10.5"
+  }
+}

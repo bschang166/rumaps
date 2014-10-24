@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Rutgers Map</title>
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet"/>
+    <link href="css/ru.map.css" rel="stylesheet"/>
+
+
+    <script type="text/javascript"
+            src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="typeahead.js/dist/bloodhound.min.js"></script>
+    <script src="typeahead.js/dist/typeahead.bundle.min.js"></script>
+</head>
+<body>
+<nav id="navbar" class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">Rutgers Map</a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul id="campusLocation" class="nav navbar-nav">
+            <li><a id="livingston" href="#" data-active="true">Livingston</a></li>
+            <li><a id="busch" href="#">Busch</a></li>
+            <li><a id="college-ave" href="#">College Ave</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="searchbar">
+    <input type="text" id="search-input" class="controls typeahead form-control" placeholder="Search..."/>
+    <div id="search-type" class="controls ">
+        <input type="radio" name="type" id="search-type-oncampus" value="onCampus" checked>
+        <label for="search-type-oncampus">On-Campus</label>
+
+        <input type="radio" name="type" id="search-type-offcampus" value="offCampus">
+        <label for="search-type-offcampus">Off-Campus</label>
+
+        <input type="radio" name="type" id="search-type-all" value="all">
+        <label for="search-type-all">All</label>
+    </div>
+</div>
+
+<div id="map-canvas"></div>
+
+<div id="wrapper">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#searchTab" role="tab" data-toggle="tab">Search</a></li>
+        <li><a href="#direction" role="tab" data-toggle="tab">Direction</a></li>
+        <li><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="searchTab">
+            <div id="featureSelection">
+                <h4>On-Campus Quick Search:  </h4>
+                <ul id="onCampusSelector" data-area="onCampus">
+                    <li>
+                        <input type="radio" name="selector" value="Academic Department" />
+                        <label>Academic Department</label>
+                    </li>
+                    <li>
+                        <input type="radio" name="selector" value="Main" />
+                        <label>Main</label>
+                    </li>
+                    <li>
+                        <input type="radio" name="selector" value="test" />
+                        <label>Test</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-pane" id="direction">...</div>
+        <div class="tab-pane" id="settings">...</div>
+    </div>
+
+</div>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+<script src="js/ru.js"></script>
+<script src="js/ru.maps.js"></script>
+<script src="js/ru.maps.configs.js"></script>
+<script src="js/ru.maps.map.js"></script>
+<script src="js/ru.maps.map.data.js"></script>
+<script src="js/ru.maps.overlayCollectionFactory.js"></script>
+
+<script>
+    var testMarker;
+    (function(){
+        var
+          map = ru.maps.map,
+          configs = ru.maps.configs
+        ;
+        var mapOptions = {
+            zoom:17,
+            center: configs.LIVINGSTON_LATLNG
+        };
+        map.initialize(configs.MAP_CONTAINER_ID, mapOptions);
+        map.data.loadAndInitialize([
+            configs.BUSCH_GEOJSON,
+            configs.LIVINGSTON_GEOJSON
+        ]);
+
+    }());
+    /*
+    var map;
+    function initialize() {
+        // Create a simple map.
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+            zoom: 4,
+            center: {lat: -28, lng: 137.883}
+        });
+
+        // Load a GeoJSON from the same server as our demo.
+        map.data.loadGeoJson('https://storage.googleapis.com/maps-devrel/google.json');
+
+        map.data.addListener("mouseover", function(event){
+            map.data.overrideStyle(event.feature, {fillColor: 'red'});
+        });
+        map.data.addListener("mouseout", function(event){
+            map.data.revertStyle();
+        });
+
+        // finds center of each polygon
+        map.data.setStyle(function(feature){
+            var bounds = new google.maps.LatLngBounds();
+
+            var polygon = feature.getGeometry();
+            polygon.getArray().forEach(function(array){
+                array.getArray().forEach(function(latLong){
+                    bounds.extend(latLong);
+                });
+            })
+            var marker = new google.maps.Marker({
+                position: bounds.getCenter()
+            });
+            marker.setMap(map);
+        });
+        */
+</script>
+<script src="js/ru.maps.controller.js"></script>
+<script src="js/ru.maps.controller.selectionCtrl.js"></script>
+</body>
+</html>
